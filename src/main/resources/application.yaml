@@ -1,0 +1,21 @@
+#spring.application.name=cloud-routing
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: customers-route
+          uri: ${CUSTOMERS_ROUTE_URI:http://localhost:8081}
+          predicates:
+            - Path=/customers/**
+          filters:
+            - AddResponseHeader=X-Powered-By, DanSON Gateway Service
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
